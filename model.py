@@ -91,7 +91,19 @@ model.fit(X_train, y_train, epochs=100)
 # Make and plot predictions for model_1
 y_preds = model.predict(X_test)
 plot_predictions(train_data=X_train, train_labels=y_train,  test_data=X_test, test_labels=y_test,  predictions=y_preds)
+# Calculate residuals (errors)
+residuals = y_test - y_preds.squeeze()
 
+# Plot residuals
+plt.figure(figsize=(6, 5))
+plt.scatter(X_test, residuals, color='purple')
+plt.axhline(y=0, color='r', linestyle='--')  # Adds a horizontal line at zero
+plt.title('Residuals of Predictions', fontsize=14)
+plt.xlabel('Test Data Points', fontsize=11)
+plt.ylabel('Residuals (Errors)', fontsize=11)
+plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+plt.savefig('residuals_plot.png', dpi=120)
+plt.show()
 
 # Calculate model_1 metrics
 mae_1 = np.round(float(mae(y_test, y_preds.squeeze()).numpy()), 2)
